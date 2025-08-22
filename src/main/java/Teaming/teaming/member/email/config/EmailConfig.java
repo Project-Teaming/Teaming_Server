@@ -8,7 +8,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
-
 @Configuration
 public class EmailConfig {
 	@Value("${spring.mail.username}") private String username;
@@ -29,7 +28,7 @@ public class EmailConfig {
 		mailProperties.put("mail.smtp.starttls.enable", "true"); // 평문연결을 TLS 연결로 변경
 		mailProperties.put("mail.debug", "true"); // 디버그 모드 활성화
 		mailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com"); // stmp.gmail.com를 신뢰하는 호스트로 지정
-		mailProperties.put("mail.smtp.ssl.protocols", "TLSv1,3"); // TLS v1.3 사용
+		mailProperties.put("mail.smtp.ssl.protocols", "TLSv1.3"); // TLS v1.3 사용
 
 		mailSender.setJavaMailProperties(mailProperties);
 		return mailSender;

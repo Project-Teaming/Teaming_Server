@@ -1,4 +1,6 @@
 package Teaming.teaming.member.email.dto;
 
-public record EmailSendRequest() {
+public record EmailSendRequest(
+		String email
+) {
 }
