@@ -29,6 +29,7 @@ public class UserService {
 		if (userRepository.existsByUsername(request.username())) {
 			return ResponseEntity.badRequest().body(Map.of("username_error", "중복된 사용자명 입니다."));
 		}
+
 		// 이메일 중복 체크
 		if (userRepository.existsByEmail(request.email())) {
 			return ResponseEntity.badRequest().body(Map.of("email_error", "해당 이메일로 이미 가입된 계정이 있습니다."));
@@ -38,12 +39,6 @@ public class UserService {
 		String rawPassword = request.password();
 		if (!isValidPassword(rawPassword)) {
 			return ResponseEntity.badRequest().body(Map.of("password_error", "비밀번호에는 영문 대소문자 중 하나, 숫자, 특수문자가 포함된 8글자 이상의 문자열이여야 합니다."));
-		}
-
-		// 학년 무결성 체크
-		int rawGrade = request.grade();
-		if (!isValidGrade(rawGrade)) {
-			return ResponseEntity.badRequest().body(Map.of("grade_error", "학년 무결성을 확인할 수 없습니다."));
 		}
 
 		// 부전공이 없는 경우에는 Null값 대신에 NONE으로 들어가게
@@ -57,7 +52,7 @@ public class UserService {
 				.name(request.name())
 				.password(passwordEncoder.encode(rawPassword))
 				.email(request.email())
-				.grade(rawGrade)
+				.grade(request.grade())
 				.mainMajor(request.mainMajor())
 				.subMajor(subMajor)
 				.role("ROLE_USER") // 관리자 계정은 ROLE_ADMIN, 선생님 계정은 ROLE_TEACHER
@@ -99,9 +94,5 @@ public class UserService {
 		boolean hasDigit = password.matches(".*\\d.*"); // 숫자가 하나라도 있는지
 		boolean hasSpecial = password.matches(".*[!@#$%^&*(),.?\":{}|<>].*"); // 특수문자가 하나라도 있는지
 		return hasLetter && hasDigit && hasSpecial;
-	}
-	// 학년 무결성 체크
-	public boolean isValidGrade(int grade) {
-		return grade >= 1 && grade <= 3;
 	}
 }

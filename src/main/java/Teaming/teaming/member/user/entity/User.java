@@ -15,19 +15,19 @@ import org.springframework.core.io.support.SpringFactoriesLoader;
 public class User {
 
 	@Id
-	@Column(length = 25)
+	@Column(length = 25, unique = true, nullable = false)
 	private String username; // 사용자명
 
-	@Column(length = 4)
+	@Column(length = 4, nullable = false)
 	private String name; // 실명
 
-	@Column(length = 100)
+	@Column(length = 100, nullable = false)
 	private String password;
 
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
 
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private int grade;
 
 	private String role;
