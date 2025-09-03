@@ -42,7 +42,8 @@ public class JwtProvider {
 				.subject(request.username())
 
 				.claim("name", request.name())
-				.claim("email", request.email())
+//				.claim("email", request.email())
+				.claim("role", request.role())
 				.claim("mainMajor", request.mainMajor())
 				.claim("subMajor", request.subMajor())
 				.claim("grade", request.grade())
@@ -63,6 +64,16 @@ public class JwtProvider {
 				.getPayload();
 
 		return claims.getSubject();
+	}
+
+	public String getRole(String token) {
+		Claims claims = Jwts.parser()
+				.verifyWith(key)
+				.build()
+				.parseSignedClaims(token)
+				.getPayload();
+
+		return claims.get("role", String.class);
 	}
 
 	// 토큰에서 토큰 타입(access_token, refresh_toke)끄집어냄

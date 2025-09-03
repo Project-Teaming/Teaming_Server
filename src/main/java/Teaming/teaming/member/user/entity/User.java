@@ -15,6 +15,9 @@ import org.springframework.core.io.support.SpringFactoriesLoader;
 public class User {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long userId;
+
 	@Column(length = 25, unique = true, nullable = false)
 	private String username; // 사용자명
 
@@ -30,7 +33,8 @@ public class User {
 	@Column(unique = true, nullable = false)
 	private int grade;
 
-	private String role;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
 	@Enumerated(EnumType.STRING)
 	private Major mainMajor; // 주전공
