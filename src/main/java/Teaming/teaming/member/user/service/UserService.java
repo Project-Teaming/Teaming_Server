@@ -1,8 +1,7 @@
 package Teaming.teaming.member.user.service;
 
 import Teaming.teaming.member.user.dto.CreateAccessTokenRequest;
-import Teaming.teaming.member.user.dto.SignInRequest;
-import Teaming.teaming.member.user.dto.SignUpRequest;
+import Teaming.teaming.member.user.dto.SignUpInRequest;
 import Teaming.teaming.member.user.entity.Major;
 import Teaming.teaming.member.user.entity.Role;
 import Teaming.teaming.member.user.entity.User;
@@ -25,7 +24,7 @@ public class UserService {
 	private final JwtProvider jwtProvider;
 
 	// 회원가입
-	public ResponseEntity<?> signUp(SignUpRequest request) {
+	public ResponseEntity<?> signUp(SignUpInRequest request) {
 		// 사용자명 중북 체크
 		if (userRepository.existsByUsername(request.username())) {
 			return ResponseEntity.badRequest().body(Map.of("username_error", "중복된 사용자명 입니다."));
@@ -62,7 +61,7 @@ public class UserService {
 		return ResponseEntity.ok().build();
 	}
 
-	public ResponseEntity<?> signIn(SignInRequest request) {
+	public ResponseEntity<?> signIn(SignUpInRequest request) {
 		User user = userRepository.findByUsername(request.username()).orElseThrow(()
 				-> new IllegalArgumentException("사용자명 혹은 비밀번호가 잘못되었습니다."));
 		if (!passwordEncoder.matches(request.password(), user.getPassword())) {
@@ -71,12 +70,7 @@ public class UserService {
 
 		CreateAccessTokenRequest accessTokenRequest = new CreateAccessTokenRequest(
 				user.getUsername(),
-				user.getName(),
-//				user.getEmail(),
-				user.getGrade(),
-				user.getRole(),
-				user.getMainMajor(),
-				user.getSubMajor()
+				user.getRole()
 		);
 
 		// 리프레시 토큰 발급(예정)

@@ -5,11 +5,6 @@ import Teaming.teaming.member.user.entity.Role;
 
 public record CreateAccessTokenRequest(
 		String username,
-		String name,
-//		String email,
-		int grade,
-		Role role,
-		Major mainMajor,
-		Major subMajor
+		Role role
 ) {
 }
