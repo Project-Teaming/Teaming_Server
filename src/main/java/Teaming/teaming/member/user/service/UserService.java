@@ -4,6 +4,7 @@ import Teaming.teaming.member.user.dto.CreateAccessTokenRequest;
 import Teaming.teaming.member.user.dto.SignInRequest;
 import Teaming.teaming.member.user.dto.SignUpRequest;
 import Teaming.teaming.member.user.entity.Major;
+import Teaming.teaming.member.user.entity.Role;
 import Teaming.teaming.member.user.entity.User;
 import Teaming.teaming.member.user.jwt.JwtProvider;
 import Teaming.teaming.member.user.repository.UserRepository;
@@ -55,7 +56,7 @@ public class UserService {
 				.grade(request.grade())
 				.mainMajor(request.mainMajor())
 				.subMajor(subMajor)
-				.role("ROLE_USER") // 관리자 계정은 ROLE_ADMIN, 선생님 계정은 ROLE_TEACHER
+				.role(Role.ROLE_STUDENT) // 학생 계정은 ROLE_STUDENT, 관리자 계정은 ROLE_ADMIN, 선생님 계정은 ROLE_TEACHER
 				.build();
 		userRepository.save(user);
 		return ResponseEntity.ok().build();
@@ -71,8 +72,9 @@ public class UserService {
 		CreateAccessTokenRequest accessTokenRequest = new CreateAccessTokenRequest(
 				user.getUsername(),
 				user.getName(),
-				user.getEmail(),
+//				user.getEmail(),
 				user.getGrade(),
+				user.getRole(),
 				user.getMainMajor(),
 				user.getSubMajor()
 		);
