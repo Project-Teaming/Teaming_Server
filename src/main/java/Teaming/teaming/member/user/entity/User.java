@@ -1,11 +1,9 @@
-package Teaming.teaming.member.user.entity;
+package teaming.teaming.member.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.context.support.BeanDefinitionDsl;
-import org.springframework.core.io.support.SpringFactoriesLoader;
 
 @Entity
 @Getter

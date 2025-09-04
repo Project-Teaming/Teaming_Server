@@ -1,6 +1,6 @@
-package Teaming.teaming.member.user.jwt;
+package teaming.teaming.member.user.jwt;
 
-import Teaming.teaming.member.user.dto.CreateAccessTokenRequest;
+import teaming.teaming.member.user.dto.CreateAccessTokenRequest;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -39,7 +39,9 @@ public class JwtProvider {
 
 		return Jwts
 				.builder()
-				.subject(request.username())
+				.subject(request.name())
+
+				.claim("email", request.email())
 				.claim("role", request.role())
 				.claim("tokenType", "access_token")
 
@@ -49,17 +51,7 @@ public class JwtProvider {
 				.compact();
 	}
 
-	// 토큰에서 사용자명 끄집어냄
-	public String getUsername(String token) {
-		Claims claims = Jwts.parser()
-				.verifyWith(key)
-				.build()
-				.parseSignedClaims(token)
-				.getPayload();
-
-		return claims.getSubject();
-	}
-
+	// 토큰에서 권한 끄집어 내기
 	public String getRole(String token) {
 		Claims claims = Jwts.parser()
 				.verifyWith(key)
@@ -79,6 +71,16 @@ public class JwtProvider {
 				.getPayload();
 
 		return claims.get("tokenType").toString();
+	}
+
+	public String getEmail(String token) {
+		Claims claims = Jwts.parser()
+				.verifyWith(key)
+				.build()
+				.parseSignedClaims(token)
+				.getPayload();
+
+		return claims.get("email", String.class);
 	}
 
 	// 토큰 무결성 검사

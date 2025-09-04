@@ -1,9 +1,9 @@
-package Teaming.teaming.member.email.controller;
+package teaming.teaming.member.email.controller;
 
-import Teaming.teaming.member.email.dto.BaseResponse;
-import Teaming.teaming.member.email.dto.EmailCheckRequest;
-import Teaming.teaming.member.email.dto.EmailSendRequest;
-import Teaming.teaming.member.email.service.EmailService;
+import teaming.teaming.member.email.dto.BaseResponse;
+import teaming.teaming.member.email.dto.EmailCheckRequest;
+import teaming.teaming.member.email.dto.EmailSendRequest;
+import teaming.teaming.member.email.service.EmailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

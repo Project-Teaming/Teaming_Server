@@ -1,6 +1,6 @@
-package Teaming.teaming.project.projectcrud.entity;
+package teaming.teaming.project.projectcrud.entity;
 
-import Teaming.teaming.member.user.entity.User;
+import teaming.teaming.member.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,7 +20,7 @@ public class Project {
 
     private String projectName;
     private String content;
-    private String ProjectManagerName;
+    private String projectManagerName;
 
     @ManyToMany
     @JoinTable(

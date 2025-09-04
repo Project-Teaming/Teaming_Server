@@ -1,4 +1,4 @@
-package Teaming.teaming.member.email.config;
+package teaming.teaming.member.email.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package Teaming.teaming.member.user.entity;
+package teaming.teaming.member.user.entity;
 
 public enum Role {
 	ROLE_STUDENT,

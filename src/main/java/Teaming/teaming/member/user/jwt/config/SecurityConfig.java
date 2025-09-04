@@ -1,6 +1,6 @@
-package Teaming.teaming.member.user.jwt.config;
+package teaming.teaming.member.user.jwt.config;
 
-import Teaming.teaming.member.user.jwt.JwtAuthFilter;
+import teaming.teaming.member.user.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.cors.CorsConfiguration;

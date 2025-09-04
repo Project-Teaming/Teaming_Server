@@ -1,4 +1,4 @@
-package Teaming.teaming.member.email.dto;
+package teaming.teaming.member.email.dto;
 
 public record EmailCheckRequest(
 		String email,

@@ -1,9 +1,9 @@
-package Teaming.teaming.member.user.dto;
+package teaming.teaming.member.user.dto;
 
-import Teaming.teaming.member.user.entity.Role;
+import teaming.teaming.member.user.entity.Role;
 
 public record CreateAccessTokenRequest(
-		String username,
+		String name,
+		String email,
 		Role role
-) {
-}
+) {}

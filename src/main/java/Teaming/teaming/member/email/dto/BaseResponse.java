@@ -1,6 +1,5 @@
-package Teaming.teaming.member.email.dto;
+package teaming.teaming.member.email.dto;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
