@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;;import java.util.O
 
 public interface ProjectRepository extends JpaRepository<Project,Long> {
     Optional<Project> findByProjectId(Long projectId);
+    Optional<Project> findByProjectManagerName(String projectManagerName);
 }

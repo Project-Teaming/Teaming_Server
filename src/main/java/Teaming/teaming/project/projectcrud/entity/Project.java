@@ -20,7 +20,7 @@ public class Project {
 
     private String projectName;
     private String content;
-    private String ProjectManagerName;
+    private String projectManagerName;
 
     @ManyToMany
     @JoinTable(

@@ -122,7 +122,7 @@ public class EmailService {
 		}
 		// Redis에 5분간 저장
 		ValueOperations<String, String> valueOperations = redisConfig.redisTemplate().opsForValue();
-		valueOperations.set(email, Integer.toString(authNumber), 3, TimeUnit.MINUTES);
+		valueOperations.set(email, Integer.toString(authNumber), 5, TimeUnit.MINUTES);
 	}
 	// 인증코드 확인
 	public BaseResponse chekAuthNum(String email, String authNum) {

@@ -1,12 +1,11 @@
 package Teaming.teaming.member.user.dto;
 
 import Teaming.teaming.member.user.entity.Major;
-import jakarta.validation.constraints.NotNull;
 
-public record SignUpInRequest(
-		@NotNull String username, // For SignIn
+public record SignUpRequest(
+		String username,
 		String name,
-		@NotNull String password, // For SignIn
+		String password,
 		String email,
 		int grade,
 		Major mainMajor,

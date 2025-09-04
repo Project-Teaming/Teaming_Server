@@ -40,7 +40,13 @@ public class JwtProvider {
 		return Jwts
 				.builder()
 				.subject(request.username())
+
+				.claim("name", request.name())
+//				.claim("email", request.email())
 				.claim("role", request.role())
+				.claim("mainMajor", request.mainMajor())
+				.claim("subMajor", request.subMajor())
+				.claim("grade", request.grade())
 				.claim("tokenType", "access_token")
 
 				.issuedAt(now)
