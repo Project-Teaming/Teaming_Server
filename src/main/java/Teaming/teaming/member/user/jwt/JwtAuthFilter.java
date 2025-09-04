@@ -38,13 +38,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 		if(token != null && jwtProvider.validateToken(token)) { // 만약 토큰값이 null이 아니고, 만료되지 않은 토큰인 경우 아래 실행 (= 토큰이 존재하고 유효한 경우에만)
 			String username = jwtProvider.getUsername(token); // 토큰 안에 들어있는 username을 꺼냄
-			String role = jwtProvider.getRole(token);
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username); // 위에서 끄집어낸 username이 DB에 있는지 조회함
 			UsernamePasswordAuthenticationToken authentication = // 비밀번호 없이 권한만 있는 인증 객체 생성
 					new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 			authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)); // 요청을 기반으로 추가 정보를 넣음(IP, 세션ID 등)
 			SecurityContextHolder.getContext().setAuthentication(authentication); // 인증된 객체를 SecurityContext에 저장해서 요청이 인증된 사용자로 동작하도록 설정
-			log.info("JWT role={}", role);
 		}
 
 		// HTTP요청과, 추출해낸 토큰이 들어있는 doFilter를 filterChain을 이용해서 넘김
