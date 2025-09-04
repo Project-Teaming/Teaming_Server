@@ -1,7 +1,7 @@
-package Teaming.teaming.member.email.service;
+package teaming.teaming.member.email.service;
 
-import Teaming.teaming.member.email.config.RedisConfig;
-import Teaming.teaming.member.email.dto.BaseResponse;
+import teaming.teaming.member.email.config.RedisConfig;
+import teaming.teaming.member.email.dto.BaseResponse;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

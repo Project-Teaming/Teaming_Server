@@ -1,12 +1,12 @@
-package Teaming.teaming.project.projectcrud.service;
+package teaming.teaming.project.projectcrud.service;
 
-import Teaming.teaming.member.user.entity.Role;
-import Teaming.teaming.member.user.entity.User;
-import Teaming.teaming.member.user.repository.UserRepository;
-import Teaming.teaming.project.exception.ProjectNotFoundException;
-import Teaming.teaming.project.projectcrud.dto.CreateRequest;
-import Teaming.teaming.project.projectcrud.entity.Project;
-import Teaming.teaming.project.projectcrud.respository.ProjectRepository;
+import teaming.teaming.member.user.entity.Role;
+import teaming.teaming.member.user.entity.User;
+import teaming.teaming.member.user.repository.UserRepository;
+import teaming.teaming.project.projectcrud.dto.CreateRequest;
+import teaming.teaming.project.projectcrud.dto.ProjectResponse;
+import teaming.teaming.project.projectcrud.entity.Project;
+import teaming.teaming.project.projectcrud.respository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -32,21 +33,43 @@ public class ProejcetService {
             Project project = Project.builder()
                     .projectName(request.ProjectName())
                     .content(request.content())
-                    .ProjectManagerName(auth.getName())
+                    .projectManagerName(auth.getName())
                     .user(List.of(user))
                     .build();
                 projectRepository.save(project);
         }
-            return ResponseEntity.ok("프로젝트가 생성되었습니다.");
+            return ResponseEntity.ok(request.ProjectName());
     }
 
-    public User addUser(Long projectId, User user) {
+    public List<ProjectResponse> getProjectList() {
+        List<Project> projects = projectRepository.findAll();
+        return projects.stream().map(projcet -> new ProjectResponse(
+                projcet.getProjectName(),
+                projcet.getContent(),
+                projcet.getProjectManagerName(),
+                projcet.getUser().stream().map(User::getUsername).toList()
+        ))
+                .toList();
+    }
 
-        Project project = projectRepository.findByProjectId(projectId)
-                .orElseThrow(ProjectNotFoundException::new);
+    public ProjectResponse UpdateProjcet(CreateRequest request, Long id) {
+        Project project = projectRepository.findByProjectId(id)
+                .orElseThrow(() -> new RuntimeException("프로젝트를 찾을 수 없습니다."));
+        project.setProjectName(request.ProjectName());
+        project.setContent(request.content());
+        projectRepository.save(project);
+        return new ProjectResponse(
+                project.getProjectName(),
+                project.getContent(),
+                project.getProjectManagerName(),
+                project.getUser().stream().map(User::getUsername).toList()
+        );
+    }
 
-        project.getUser().add(user);
-
-        return userRepository.save(user);
+    public ResponseEntity<?> DeleteProjcet(Long id) {
+        Project project = projectRepository.findByProjectId(id)
+                .orElseThrow(() -> new RuntimeException("프로젝트를 찾을 수 없습니다"));
+        projectRepository.delete(project);
+        return ResponseEntity.ok(Map.of("Message", "프로젝트가 제거되었습니다."));
     }
 }

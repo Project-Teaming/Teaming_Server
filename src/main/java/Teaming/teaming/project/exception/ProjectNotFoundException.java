@@ -1,4 +1,4 @@
-package Teaming.teaming.project.exception;
+package teaming.teaming.project.exception;
 
 public class ProjectNotFoundException extends RuntimeException {
     public ProjectNotFoundException() {

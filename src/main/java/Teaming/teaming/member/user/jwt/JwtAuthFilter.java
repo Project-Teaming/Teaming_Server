@@ -1,15 +1,13 @@
-package Teaming.teaming.member.user.jwt;
+package teaming.teaming.member.user.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,11 +16,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 
 @Component
-@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 	private final JwtProvider jwtProvider;
@@ -37,7 +32,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 		String token = jwtProvider.resolveToken(request); // 클라이언트가 보낸 HTTP요청 전체에서 토큰값을 꺼내고, jwtProvider에 따라서 토큰 추출
 
 		if(token != null && jwtProvider.validateToken(token)) { // 만약 토큰값이 null이 아니고, 만료되지 않은 토큰인 경우 아래 실행 (= 토큰이 존재하고 유효한 경우에만)
-			String username = jwtProvider.getUsername(token); // 토큰 안에 들어있는 username을 꺼냄
+			String username = jwtProvider.getEmail(token); // 토큰 안에 들어있는 username을 꺼냄
+			String role = jwtProvider.getRole(token);
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username); // 위에서 끄집어낸 username이 DB에 있는지 조회함
 			UsernamePasswordAuthenticationToken authentication = // 비밀번호 없이 권한만 있는 인증 객체 생성
 					new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

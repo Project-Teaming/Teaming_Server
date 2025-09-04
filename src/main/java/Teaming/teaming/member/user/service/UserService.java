@@ -1,12 +1,12 @@
-package Teaming.teaming.member.user.service;
+package teaming.teaming.member.user.service;
 
-import Teaming.teaming.member.user.dto.CreateAccessTokenRequest;
-import Teaming.teaming.member.user.dto.SignUpInRequest;
-import Teaming.teaming.member.user.entity.Major;
-import Teaming.teaming.member.user.entity.Role;
-import Teaming.teaming.member.user.entity.User;
-import Teaming.teaming.member.user.jwt.JwtProvider;
-import Teaming.teaming.member.user.repository.UserRepository;
+import teaming.teaming.member.user.dto.CreateAccessTokenRequest;
+import teaming.teaming.member.user.dto.SignUpInRequest;
+import teaming.teaming.member.user.entity.Major;
+import teaming.teaming.member.user.entity.Role;
+import teaming.teaming.member.user.entity.User;
+import teaming.teaming.member.user.jwt.JwtProvider;
+import teaming.teaming.member.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -62,14 +62,15 @@ public class UserService {
 	}
 
 	public ResponseEntity<?> signIn(SignUpInRequest request) {
-		User user = userRepository.findByUsername(request.username()).orElseThrow(()
-				-> new IllegalArgumentException("사용자명 혹은 비밀번호가 잘못되었습니다."));
+		User user = userRepository.findByEmail(request.email()).orElseThrow(()
+				-> new IllegalArgumentException("이메일 혹은 비밀번호가 잘못되었습니다."));
 		if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-			throw new IllegalArgumentException("사용자명 혹은 비밀번호가 잘못되었습니다.");
+			throw new IllegalArgumentException("이메일 혹은 비밀번호가 잘못되었습니다.");
 		}
 
 		CreateAccessTokenRequest accessTokenRequest = new CreateAccessTokenRequest(
 				user.getUsername(),
+				user.getEmail(),
 				user.getRole()
 		);
 

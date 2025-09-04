@@ -1,11 +1,11 @@
-package Teaming.teaming.member.user.jwt;
+package teaming.teaming.member.user.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import Teaming.teaming.member.user.entity.User;
+import teaming.teaming.member.user.entity.User;
 import java.util.Collection;
 import java.util.List;
 
